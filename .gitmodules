@@ -1,0 +1,6 @@
+[submodule "src/message_delay"]
+	path = src/message_delay
+	url = git@github.com:yoshito-n-students/message_delay.git
+[submodule "src/mjpeg_client"]
+	path = src/mjpeg_client
+	url = git@github.com:yoshito-n-students/mjpeg_client.git
