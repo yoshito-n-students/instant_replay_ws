@@ -1,0 +1,40 @@
+<launch>
+    <!-- -->
+    <!-- arguments -->
+    <arg name="server" default="192.168.1.1"/>
+    <arg name="path" default="/axis-cgi/mjpg/video.cgi"/>
+    <arg name="delay" default="10.0"/>
+    <!-- -->
+    <!-- the nodelet manager -->
+    <node name="image_replay" pkg="nodelet" type="nodelet" args="manager" output="screen"/>
+    <!-- -->
+    <!-- live image stream from mjpeg server -->
+    <node name="mjepg_client_loader" pkg="nodelet" type="nodelet" 
+          args="load mjpeg_client/MjpegClient image_replay" output="screen">
+        <remap from="image" to="image_live"/>
+        <param name="server" value="$(arg server)"/>
+        <param name="path" value="$(arg path)"/>
+        <!-- optional authorization (run "echo -n username:password | base64" to get your encoded string)-->
+        <!--<param name="authorization" value="Basic cm9vdDpyb2JvY3Vw"/>-->
+        <param name="timeout" value="5.0"/>
+        <param name="frame_id" value="mjpeg_camera"/>
+    </node>
+    <!-- -->
+    <!-- replay image stream with delay -->
+    <node name="message_delay_loader" pkg="nodelet" type="nodelet" 
+          args="load message_delay/MessageDelay image_replay" output="screen">
+        <remap from="topic_in" to="image_live/compressed"/>
+        <remap from="topic_out" to="image_replay/compressed"/>
+        <param name="delay" value="$(arg delay)"/>
+    </node>
+    <!-- -->
+    <!-- image viewers -->
+    <node name="live_view" pkg="image_view" type="image_view" output="screen">
+        <remap from="image" to="image_live"/>
+        <param name="image_transport" value="compressed"/>
+    </node>
+    <node name="replay_view" pkg="image_view" type="image_view" output="screen">
+        <remap from="image" to="image_replay"/>
+        <param name="image_transport" value="compressed"/>
+    </node>
+</launch>
