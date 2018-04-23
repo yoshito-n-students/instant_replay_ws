@@ -1,7 +1,7 @@
 <launch>
     <!-- -->
     <!-- arguments -->
-    <arg name="server" default="192.168.1.1"/>
+    <arg name="server" default="192.168.0.90"/>
     <arg name="path" default="/axis-cgi/mjpg/video.cgi"/>
     <arg name="delay" default="10.0"/>
     <!-- -->
