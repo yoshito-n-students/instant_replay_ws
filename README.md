@@ -16,7 +16,7 @@ cd instant_replay_ws
 source devel/setup.bash
 roslaunch instant_replay_application everything.launch server:=<camera's ip address> path:=<path to motion-jpeg video> delay:=<delay in seconds>
 ```
-Parameters for `everything.launch` can be omitted if you want to use the default values (`server`: 192.168.0.90, `path`: /axis-cgi/mjpg/video.cgi, and `delay`: 1.0).
+Parameters for `everything.launch` can be omitted if you want to use the default values (`server`: 192.168.0.90, `path`: /axis-cgi/mjpg/video.cgi, and `delay`: 10.0).
 
 ### Trouble shooting
 * check if the PC and camera are connected by running `ping <server>` in a terminal
